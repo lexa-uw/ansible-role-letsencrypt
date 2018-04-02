@@ -37,7 +37,7 @@
 - set_fact:
     lets_encrypt_certificate_invalidated: false
 
-- name: Set whether needs update
+- name: Set whether needs update (cert {{acme_data.cert_days}} days)
   set_fact:
     lets_encrypt_certificate_invalidated: true
   when: acme_data.challenge_data is not undefined
