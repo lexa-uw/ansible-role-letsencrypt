@@ -1,0 +1,30 @@
+---
+
+- name: Setup docker environment
+  hosts: localhost
+  vars:
+    image_name: docker-debian
+  tasks:
+    - name: Build images
+      docker_image:
+        path: ./docker/debian
+        name: "{{image_name}}"
+        tag: latest
+    - name: Bring up linked docker container
+      include_role:
+        name: provision_docker
+      vars:
+        inventory:
+          - name: docker
+            image: "{{image_name}}:latest"
+        provision_docker_inventory: "{{ inventory }}"
+        provision_docker_use_docker_connection: true
+
+- name: Check running docker container
+  hosts: docker
+  vars:
+    hostname: localhost
+  tasks:
+    - name: Check role
+      include_role:
+        name: app
