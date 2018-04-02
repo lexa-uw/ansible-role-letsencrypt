@@ -3,8 +3,8 @@
 
 lets_encrypt_hostname: localhost
 lets_encrypt_agreement: "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
-#lets_encrypt_endpoint: "https://acme-v01.api.letsencrypt.org/directory"      # Production
-lets_encrypt_endpoint: "https://acme-staging.api.letsencrypt.org/directory"   # Staging
+lets_encrypt_endpoint: "https://acme-v01.api.letsencrypt.org/directory"      # Production
+#lets_encrypt_endpoint: "https://acme-staging.api.letsencrypt.org/directory"   # Staging
 lets_encrypt_directories:
   certs: /tmp       # directory for certificates
   data: /tmp/data   # directory for challenge data
