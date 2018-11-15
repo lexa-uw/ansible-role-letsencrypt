@@ -34,7 +34,7 @@ Add role to project:
 Add role into your requirements(_requirements.yml_ for example):
 ```yaml
 - src: https://github.com/lexa-uw/ansible-role-letsencrypt
-  version: v1.1.0
+  version: v2.0.0
   name: letsencrypt
 ```
 
