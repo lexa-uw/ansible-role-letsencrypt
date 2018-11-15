@@ -3,25 +3,25 @@
 
 - name: Prepare directory for challenge data
   file:
-    path: "{{lets_encrypt_directories.data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource'] | dirname}}"
+    path: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource'] | dirname}}"
     state: directory
 
 - name: Prepare challenge data
   copy:
-    dest: "{{lets_encrypt_directories.data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
+    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
     content: "{{acme_data['challenge_data'][hostname]['http-01']['resource_value']}}"
 
 - name: Ask Lets Encrypt to validate and issue a new key
   letsencrypt:
-    account_key: "{{lets_encrypt_directories.certs}}/letsencrypt.pem"
+    account_key: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
     acme_directory: "{{lets_encrypt_endpoint}}"
-    csr: "{{lets_encrypt_directories.certs}}/request.pem"
-    dest: "{{lets_encrypt_directories.certs}}/cert.pem"
+    csr: "{{lets_encrypt_directories_certs}}/request.pem"
+    dest: "{{lets_encrypt_directories_certs}}/cert.pem"
     data: "{{acme_data}}"
 
 - name: Remove challenge data
   file:
-    dest: "{{lets_encrypt_directories.data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
+    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
     state: absent
 
 - name: "Create a build directory for fullchain assembly"
@@ -32,7 +32,7 @@
 
 - name: "Copy the issued certificate to the build dir for assembly"
   copy:
-    src: "{{lets_encrypt_directories.certs}}/cert.pem"
+    src: "{{lets_encrypt_directories_certs}}/cert.pem"
     dest: "{{build_dir.path}}/01-{{lets_encrypt_hostname}}.pem"
     remote_src: "yes"
 
@@ -44,13 +44,13 @@
 - name: "Copy CA certificate"
   copy:
     src: "{{build_dir.path}}/02-chain.pem"
-    dest: "{{lets_encrypt_directories.certs}}/chain.pem"
+    dest: "{{lets_encrypt_directories_certs}}/chain.pem"
     remote_src: "yes"
 
 - name: "Assemble the full chain"
   assemble:
     src: "{{build_dir.path}}"
-    dest: "{{lets_encrypt_directories.certs}}/fullchain.pem"
+    dest: "{{lets_encrypt_directories_certs}}/fullchain.pem"
 
 - name: "Cleanup build dir"
   file:

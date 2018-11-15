@@ -9,29 +9,29 @@
 
 - name: Prepare directory for certificates
   file:
-    path: "{{lets_encrypt_directories.certs}}"
+    path: "{{lets_encrypt_directories_certs}}"
     state: directory
 
 - name: Create the Lets Encrypt signing key and the resource wide keys
   openssl_privatekey:
-    path: "{{lets_encrypt_directories.certs}}/{{item}}"
+    path: "{{lets_encrypt_directories_certs}}/{{item}}"
   with_items:
     - letsencrypt.pem
     - private_key.pem
 
 - name: Create the certificate signing request
   openssl_csr:
-    path: "{{lets_encrypt_directories.certs}}/request.pem"
-    privatekey_path: "{{lets_encrypt_directories.certs}}/private_key.pem"
+    path: "{{lets_encrypt_directories_certs}}/request.pem"
+    privatekey_path: "{{lets_encrypt_directories_certs}}/private_key.pem"
     common_name: "{{lets_encrypt_hostname}}"
 
 - name: Make the request of the Lets Encrypt API
   letsencrypt:
-    account_key: "{{lets_encrypt_directories.certs}}/letsencrypt.pem"
+    account_key: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
     acme_directory: "{{lets_encrypt_endpoint}}"
     agreement: "{{lets_encrypt_agreement}}"
-    csr: "{{lets_encrypt_directories.certs}}/request.pem"
-    dest: "{{lets_encrypt_directories.certs}}/cert.pem"
+    csr: "{{lets_encrypt_directories_certs}}/request.pem"
+    dest: "{{lets_encrypt_directories_certs}}/cert.pem"
   register: acme_data
 
 - set_fact:
@@ -43,4 +43,4 @@
   when: acme_data.challenge_data is not undefined
 
 - include: certificate.yml
-  when: lets_encrypt_certificate_invalidated == true
+  when: (lets_encrypt_certificate_invalidated | bool | default(false))
