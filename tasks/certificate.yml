@@ -12,8 +12,9 @@
     content: "{{acme_data['challenge_data'][hostname]['http-01']['resource_value']}}"
 
 - name: Ask Lets Encrypt to validate and issue a new key
-  letsencrypt:
-    account_key: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
+  acme_certificate:
+    acme_version: "{{ acme_version }}"
+    account_key_src: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
     acme_directory: "{{lets_encrypt_endpoint}}"
     csr: "{{lets_encrypt_directories_certs}}/request.pem"
     dest: "{{lets_encrypt_directories_certs}}/cert.pem"
@@ -21,7 +22,7 @@
 
 - name: Remove challenge data
   file:
-    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
+    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][lets_encrypt_hostname]['http-01']['resource']}}"
     state: absent
 
 - name: "Create a build directory for fullchain assembly"

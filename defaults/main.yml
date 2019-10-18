@@ -1,6 +1,7 @@
 ---
 # defaults file for role-letsencrypt
 
+acme_version: 2
 lets_encrypt_hostname: localhost
 lets_encrypt_agreement: "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
 lets_encrypt_endpoint: "https://acme-v02.api.letsencrypt.org/directory"           # Production

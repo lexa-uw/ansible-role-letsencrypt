@@ -26,12 +26,15 @@
     common_name: "{{lets_encrypt_hostname}}"
 
 - name: Make the request of the Lets Encrypt API
-  letsencrypt:
-    account_key: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
-    acme_directory: "{{lets_encrypt_endpoint}}"
+  acme_certificate:
+    account_key_src: "{{lets_encrypt_directories_certs}}/letsencrypt.pem"
+    acme_directory: "{{ lets_encrypt_endpoint }}"
+    acme_version: "{{ acme_version }}"
     agreement: "{{lets_encrypt_agreement}}"
+    challenge: "http-01"
     csr: "{{lets_encrypt_directories_certs}}/request.pem"
     dest: "{{lets_encrypt_directories_certs}}/cert.pem"
+    terms_agreed: true
   register: acme_data
 
 - set_fact:
