@@ -3,13 +3,13 @@
 
 - name: Prepare directory for challenge data
   file:
-    path: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource'] | dirname}}"
+    path: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][lets_encrypt_hostname]['http-01']['resource'] | dirname}}"
     state: directory
 
 - name: Prepare challenge data
   copy:
-    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][hostname]['http-01']['resource']}}"
-    content: "{{acme_data['challenge_data'][hostname]['http-01']['resource_value']}}"
+    dest: "{{lets_encrypt_directories_data}}/{{acme_data['challenge_data'][lets_encrypt_hostname]['http-01']['resource']}}"
+    content: "{{acme_data['challenge_data'][lets_encrypt_hostname]['http-01']['resource_value']}}"
 
 - name: Ask Lets Encrypt to validate and issue a new key
   acme_certificate:
