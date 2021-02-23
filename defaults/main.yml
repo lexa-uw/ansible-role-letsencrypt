@@ -8,3 +8,4 @@ lets_encrypt_endpoint: "https://acme-v02.api.letsencrypt.org/directory"         
 #lets_encrypt_endpoint: "https://acme-staging-v02.api.letsencrypt.org/directory"  # Staging
 lets_encrypt_directories_certs: /tmp       # directory for certificates
 lets_encrypt_directories_data: /tmp/data   # directory for challenge data
+lets_encrypt_ic_url: "https://letsencrypt.org/certs/lets-encrypt-r3-cross-signed.pem.txt"

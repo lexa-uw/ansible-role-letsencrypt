@@ -39,7 +39,7 @@
 
 - name: "Fetch the CA certificate"
   get_url:
-    url: "https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt"
+    url: "{{lets_encrypt_ic_url}}"
     dest: "{{build_dir.path}}/02-chain.pem"
 
 - name: "Copy CA certificate"
