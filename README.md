@@ -1,4 +1,4 @@
-GitLab Runner 
+Ansible Role LetsEncrypt
 =============
 
 This role will allow you to install SSL certificates through [Let's Encrypt](https://letsencrypt.org/).
